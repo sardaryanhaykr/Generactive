@@ -1,5 +1,6 @@
-package Entity;
+package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,31 +12,32 @@ public class Group {
     private Group parent;
     private List<Group> subGroups;
     private List<Item> items;
+    private int idSequance=1000;
 
-    public Group(int id, String name, Group parent, List<Group> subGroups) {
-        this.id = id;
+    public Group( String name, Group parent, List<Group> subGroups) {
+        this.id = ++idSequance;
         this.name = name;
         this.parent = parent;
         this.subGroups = subGroups;
+        items = new ArrayList<>();
+        subGroups = new ArrayList<>();
     }
 
-    public Group(int id, String name, Group parent) {
-        this(id,name,parent,null);
-    }
-
-    public Group(String name, Group parent) {
-        this(0,name,parent,null);
+    public Group( String name, Group parent) {
+        this(name,parent,null);
     }
 
     public Group(String name){
-        this(0,name,null,null);
+        this(name,null,null);
     }
 
-    public Group(){};
+    public Group(){
+        this(null,null,null);
+    }
 
     public void printContent(){
         System.out.println(this.getName());
-        System.out.println("    ");
+        System.out.print("    ");
         if(subGroups != null){
             for (Group group:subGroups) {
                 group.printContent();

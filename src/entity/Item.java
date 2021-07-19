@@ -1,4 +1,4 @@
-package Entity;
+package entity;
 
 /**
  * Created by Hayk on 15.07.2021.
@@ -8,19 +8,16 @@ public class Item {
     private String name;
     private String imageURL;
     private Group  parentGroup;
+    private long idSequance=1000;
 
-    public Item(long id, String name, String imageURL, Group  parentGroup) {
-        this.id = id;
+    public Item( String name, String imageURL, Group  parentGroup) {
+        this.id = ++idSequance;
         this.name = name;
         this.imageURL = imageURL;
         this.parentGroup = parentGroup;
     }
 
-    public Item(String name,String imageURL,Group  parentGroup){
-        this(0,name,imageURL,parentGroup);
-    }
-
-    public Item(){}
+    public Item(){this(null,null,null);}
 
     public long getId() {
         return id;

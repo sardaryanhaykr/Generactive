@@ -1,24 +1,25 @@
-import Control.GroupControl;
-import Entity.Group;
-import Util.GroupUtil;
-import Util.Validator;
+
+import db.FakeDatabase;
+import entity.Group;
+import entity.Item;
+import service.GroupService;
+import service.ItemService;
+import validator.Validator;
 
 import java.util.Scanner;
 
 public class Main {
-   private static GroupControl groupControl=new GroupControl();
+   private static GroupService groupService = new GroupService();
+   private static ItemService itemService = new ItemService();
+    private static Scanner input_scanner = new Scanner(System.in);
 
     private static String input(String message) {
-        String string="";
-        Scanner input_scanner = new Scanner(System.in);
         System.out.println( message);
-
-            string = input_scanner.nextLine();
-
-        input_scanner.close();
+        String string = input_scanner.nextLine();
         return string;
     }
-    static Group inputGroup(){
+
+    static void inputGroup(){
         Group group = new Group();
         String name="";
         do{
@@ -26,24 +27,55 @@ public class Main {
         } while (name.equals(""));
 
         group.setName(name);
-        int parentId=0;
+        int parentId = 0;
         String temp;
-        boolean t=true;
+        boolean t = true;
 
         do{
+            FakeDatabase.printGroupsId();
             temp = input("Enter existing ID of parent group");
             t = Validator.isValidNumber(temp);
             if ( t ){
                 parentId = Integer.parseInt(temp);
-                if(parentId !=0 && groupControl.findById(parentId) != null){
+                if(parentId !=0 && groupService.getById(parentId) != null){
                     t = false;
                 }  else{
                     parentId = 0;
                 }
             }
         }while (!t);
-        GroupUtil.create(group,parentId);
-        return group;
+        groupService.add(group,groupService.getById(parentId));
+    }
+
+    public static void inputItem(){
+        Item item = new Item();
+        String name="";
+        do{
+            name = input("Enter the name of item");
+        } while (name.equals(""));
+        item.setName(name);
+        String imageURL="";
+        do{
+            imageURL = input("Enter the image url of item");
+        } while (imageURL.equals(""));
+        item.setImageURL(imageURL);
+        String temp;
+        boolean t = true;
+        int groupId = 0;
+        do{
+            FakeDatabase.printGroupsId();
+            temp = input("Enter existing ID of parent group");
+            t = Validator.isValidNumber(temp);
+            if ( t ){
+                groupId = Integer.parseInt(temp);
+                if(groupId !=0 && groupService.getById(groupId) != null){
+                    t = false;
+                }  else{
+                    groupId = 0;
+                }
+            }
+        }while (!t);
+        itemService.add(item,groupService.getById(groupId));
     }
 
     public static void main(String[] args) {
@@ -58,12 +90,21 @@ public class Main {
              System.out.println("exit");
                 command =input("Enter command");
              switch (command){
-                 case "group":{
-                     System.out.println("From group");
-                 }
+                 case "group" : {
+                     inputGroup();
+                 }break;
+                 case "item" : {
+                    inputItem();
+                 }break;
+                 case "show":{
+                     for (Group group: groupService.getRoots()) {
+                         group.printContent();
+                     }
+                 }break;
              }
-             command="";
-         }while (!command.toLowerCase().equals("exit"));
 
+         }while (!command.toLowerCase().equals("exit"));
+         input_scanner.close();
     }
+
 }
