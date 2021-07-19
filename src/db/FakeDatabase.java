@@ -4,6 +4,7 @@ import entity.Group;
 import entity.Item;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,15 +22,15 @@ public class FakeDatabase {
         return items;
     }
 
-    public static void printGroupsId(){
-        System.out.print("(");
-        for (int i = 0; i < groups.size(); i++) {
-            System.out.print(groups.get(i).getId());
-            if (i < groups.size()-1){
-                System.out.print(", ");
-            }else {
-                System.out.print(")");
-            }
+    private static List<Integer> idList(){
+        List<Integer> integers =new ArrayList<>();
+        for (Group group: groups) {
+            integers.add(group.getId());
         }
+        return integers;
+    }
+
+    public static void printGroupsId(){
+        idList().toString();
     }
 }

@@ -57,7 +57,9 @@ public class ItemService {
 
         public  void addRelation(Item item, Group group){
             item.setParentGroup(group);
-            group.getItems().add(item);
+            if (group != null) {
+                group.getItems().add(item);
+            }
         }
     }
 }

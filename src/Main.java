@@ -61,6 +61,17 @@ public class Main {
         item.setImageURL(imageURL);
         String temp;
         boolean t = true;
+        int price=0;
+        do{
+            temp = input("Enter the price of item");
+            t = Validator.isValidNumber(temp);
+            if ( t ){
+                price = Integer.parseInt(temp);
+                t = false;
+            }
+        } while (t);
+
+        t = true;
         int groupId = 0;
         do{
             FakeDatabase.printGroupsId();

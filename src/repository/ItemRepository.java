@@ -22,6 +22,9 @@ public class ItemRepository implements CrudRepository<Item,Long> {
     @Override
     public void update(Item item, Long id) {
         Item item1 = findById(id);
+        if (item.getPrice() != 0){
+            item1.setPrice(item.getPrice());
+        }
         if (item.getName() != null){
             item1.setName(item.getName());
         }
