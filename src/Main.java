@@ -38,7 +38,7 @@ public class Main {
             if ( t ){
                 parentId = Integer.parseInt(temp);
                 if(parentId !=0 && groupService.getById(parentId) != null){
-                    t = false;
+                    t = true;
                 }  else{
                     parentId = 0;
                 }
@@ -67,10 +67,9 @@ public class Main {
             t = Validator.isValidNumber(temp);
             if ( t ){
                 price = Integer.parseInt(temp);
-                t = false;
             }
-        } while (t);
-
+        } while (!t);
+        item.setPrice(price);
         t = true;
         int groupId = 0;
         do{
@@ -80,7 +79,7 @@ public class Main {
             if ( t ){
                 groupId = Integer.parseInt(temp);
                 if(groupId !=0 && groupService.getById(groupId) != null){
-                    t = false;
+                    t = true;
                 }  else{
                     groupId = 0;
                 }

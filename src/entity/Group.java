@@ -12,9 +12,9 @@ public class Group {
     private Group parent;
     private List<Group> subGroups;
     private List<Item> items;
-    private int idSequance=1000;
+    private static int idSequance=1000;
 
-    public Group( String name, Group parent, List<Group> subGroups) {
+    public Group( String name, Group parent) {
         this.id = ++idSequance;
         this.name = name;
         this.parent = parent;
@@ -23,31 +23,27 @@ public class Group {
         subGroups = new ArrayList<>();
     }
 
-    public Group( String name, Group parent) {
-        this(name,parent,null);
-    }
-
     public Group(String name){
-        this(name,null,null);
+        this(name,null);
     }
 
     public Group(){
-        this(null,null,null);
+        this(null,null);
     }
 
     public void printContent(){
         System.out.println(this.getName());
-        System.out.print("    ");
+        System.out.print("-");
         if(subGroups != null){
             for (Group group:subGroups) {
                 group.printContent();
             }
         }
-        if (items != null){
+
             for (Item item: items) {
                 System.out.println("-"+item.getName());
             }
-        }
+
 
     }
 
