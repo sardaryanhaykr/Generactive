@@ -15,13 +15,12 @@ public class Main {
 
     private static String input(String message) {
         System.out.println( message);
-        String string = input_scanner.nextLine();
-        return string;
+         return input_scanner.nextLine();
     }
 
     static void inputGroup(){
         Group group = new Group();
-        String name="";
+        String name;
         do{
            name = input("Enter the name of group");
         } while (name.equals(""));
@@ -29,7 +28,7 @@ public class Main {
         group.setName(name);
         int parentId = 0;
         String temp;
-        boolean t = true;
+        boolean t;
 
         do{
             FakeDatabase.printGroupsId();
@@ -49,18 +48,18 @@ public class Main {
 
     public static void inputItem(){
         Item item = new Item();
-        String name="";
+        String name;
         do{
             name = input("Enter the name of item");
         } while (name.equals(""));
         item.setName(name);
-        String imageURL="";
+        String imageURL;
         do{
             imageURL = input("Enter the image url of item");
         } while (imageURL.equals(""));
         item.setImageURL(imageURL);
         String temp;
-        boolean t = true;
+        boolean t;
         int price=0;
         do{
             temp = input("Enter the price of item");
@@ -70,7 +69,6 @@ public class Main {
             }
         } while (!t);
         item.setPrice(price);
-        t = true;
         int groupId = 0;
         do{
             FakeDatabase.printGroupsId();
@@ -108,7 +106,7 @@ public class Main {
                  }break;
                  case "show":{
                      for (Group group: groupService.getRoots()) {
-                         group.printContent();
+                         group.printContent("");
                      }
                  }break;
              }

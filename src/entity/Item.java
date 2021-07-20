@@ -9,7 +9,7 @@ public class Item {
     private String imageURL;
     private int price;
     private Group  parentGroup;
-    private long idSequance=1000;
+    private static long idSequance=1000;
 
     public Item( String name, String imageURL, int price, Group  parentGroup) {
         this.id = ++idSequance;

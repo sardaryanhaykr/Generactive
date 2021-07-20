@@ -31,20 +31,25 @@ public class Group {
         this(null,null);
     }
 
-    public void printContent(){
-        System.out.println(this.getName());
-        System.out.print("-");
-        if(subGroups != null){
+    public void printContent(String s){
+
+        if(!subGroups.isEmpty() || !items.isEmpty()){
+            System.out.print(s+"Parent Group: ");
+        }
+        System.out.println(s+this.getName());
+        if (!subGroups.isEmpty() || !items.isEmpty()){
+            s += "-";
+        }
+        if(!subGroups.isEmpty()){
             for (Group group:subGroups) {
-                group.printContent();
+                group.printContent(s);
             }
         }
-
-            for (Item item: items) {
-                System.out.println("-"+item.getName());
+        if (!items.isEmpty()) {
+            for (Item item : items) {
+                System.out.println(s + item.getName());
             }
-
-
+        }
     }
 
     public int getId() {
