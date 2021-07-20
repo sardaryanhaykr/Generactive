@@ -80,6 +80,7 @@ public class Main {
                     t = true;
                 }  else{
                     groupId = 0;
+                    t = false;
                 }
             }
         }while (!t);
@@ -92,18 +93,24 @@ public class Main {
 
          do{
              System.out.println("Please enter one of the commands");
-             System.out.println("group");
-             System.out.println("item");
-             System.out.println("show");
-             System.out.println("exit");
-                command =input("Enter command");
+             System.out.println("group----OR----1");
+             System.out.println("item-----OR----2");
+             System.out.println("show-----OR----3");
+             System.out.println("exit-----OR----0");
+                command =input("Enter command").toLowerCase();
              switch (command){
+                 case "0":{
+                     command = "exit";
+                 }break;
+                 case "1":
                  case "group" : {
                      inputGroup();
                  }break;
+                 case "2":
                  case "item" : {
                     inputItem();
                  }break;
+                 case "3":
                  case "show":{
                      for (Group group: groupService.getRoots()) {
                          group.printContent("");
@@ -111,7 +118,7 @@ public class Main {
                  }break;
              }
 
-         }while (!command.toLowerCase().equals("exit"));
+         }while (!command.toLowerCase().equals("exit") );
          input_scanner.close();
     }
 
