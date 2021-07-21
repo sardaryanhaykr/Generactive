@@ -4,50 +4,21 @@ package entity;
  * Created by Hayk on 21.07.2021.
  */
 public class GenerativeItem extends Item {
-    private int complexity;
-    private GenerativeType generativeType;
+    private double complexity;
 
-    public int getComplexity() {
+    @Override
+    public double calculatePrice(int price) {
+        return price * getConfiguration().getResolution().coefficient * complexity;
+    }
+
+    public double getComplexity() {
+        generateCompexity();
         return complexity;
     }
 
-    public void setComplexity() {
-        complexity = generativeType.multipl;
+    private void generateCompexity() {
+
+        complexity = 1 + Math.random();
     }
 
-    public GenerativeType getGenerativeType() {
-        return generativeType;
-    }
-
-    public void setGenerativeType(GenerativeType generativeType) {
-        this.generativeType = generativeType;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        GenerativeItem that = (GenerativeItem) o;
-
-        if (complexity != that.complexity) return false;
-        return generativeType == that.generativeType;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + complexity;
-        result = 31 * result + (generativeType != null ? generativeType.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "GenerativeItem{" +
-                "complexity=" + complexity +
-                ", generativeType=" + generativeType +
-                '}';
-    }
 }

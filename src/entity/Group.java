@@ -12,36 +12,40 @@ public class Group {
     private Group parent;
     private List<Group> subGroups;
     private List<Item> items;
-    private static int idSequance=1000;
+    private static int idSequance = 1000;
 
-    public Group( String name, Group parent) {
+    private Group(String name, Group parent) {
         this.id = ++idSequance;
         this.name = name;
         this.parent = parent;
-        this.subGroups = subGroups;
         items = new ArrayList<>();
         subGroups = new ArrayList<>();
     }
 
-    public Group(String name){
-        this(name,null);
+    public Group(String name) {
+        this(name, null);
     }
 
-    public Group(){
-        this(null,null);
+    public Group() {
+        this(null, null);
     }
 
-    public void printContent(String s){
+    public void addSubGroup(Group group) {
+        this.subGroups.add(group);
+        group.setParent(this);
+    }
 
-        if(!subGroups.isEmpty() || !items.isEmpty()){
-            System.out.print(s+"Parent Group: ");
+    public void printContent(String s) {
+
+        if (!subGroups.isEmpty() || !items.isEmpty()) {
+            System.out.print(s + "Parent Group: ");
         }
-        System.out.println(s+this.getName());
-        if (!subGroups.isEmpty() || !items.isEmpty()){
+        System.out.println(s + this.getName());
+        if (!subGroups.isEmpty() || !items.isEmpty()) {
             s += "-";
         }
-        if(!subGroups.isEmpty()){
-            for (Group group:subGroups) {
+        if (!subGroups.isEmpty()) {
+            for (Group group : subGroups) {
                 group.printContent(s);
             }
         }

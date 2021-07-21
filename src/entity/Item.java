@@ -8,20 +8,31 @@ public abstract class Item {
     private String name;
     private String imageURL;
     private int price;
-    private Group  parentGroup;
-    private static long idSequance=1000;
+    private Group parentGroup;
+    private static long idSequance = 1000;
     private double finalPrice;
-    private double resolutionCoefficient;
+    private Configuration configuration;
 
-    public Item( String name, String imageURL, int price, Group  parentGroup) {
+    private Item(String name, String imageURL, int price, Group parentGroup) {
         this.id = ++idSequance;
         this.name = name;
         this.imageURL = imageURL;
-        this.price=price;
+        this.price = price;
         this.parentGroup = parentGroup;
     }
 
-    public Item(){this(null,null,0,null);}
+    public Item(String name, String imageURL, int price, Group parentGroup, double finalPrice, Configuration configuration) {
+        this.name = name;
+        this.imageURL = imageURL;
+        this.price = price;
+        this.parentGroup = parentGroup;
+        this.finalPrice = finalPrice;
+        this.configuration = configuration;
+    }
+
+    Item() {
+        this(null, null, 0, null);
+    }
 
     public long getId() {
         return id;
@@ -63,20 +74,24 @@ public abstract class Item {
         this.parentGroup = parentGroup;
     }
 
-    public double getFinalPrice() {
+    Configuration getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    double getFinalPrice() {
         return finalPrice;
     }
 
-    public void setFinalPrice() {
-        finalPrice =new Configuration().configure(this);
+    public void setFinalPrice(double finalPrice) {
+        this.finalPrice = finalPrice;
     }
 
-    public double getResolutionCoefficient() {
-        return resolutionCoefficient;
-    }
-
-    public void setResolutionCoefficient(double resolutionCoefficient) {
-        this.resolutionCoefficient = resolutionCoefficient;
+    public double calculatePrice(int price) {
+        return price * configuration.getResolution().coefficient;
     }
 
     @Override
@@ -89,10 +104,10 @@ public abstract class Item {
         if (id != item.id) return false;
         if (price != item.price) return false;
         if (Double.compare(item.finalPrice, finalPrice) != 0) return false;
-        if (Double.compare(item.resolutionCoefficient, resolutionCoefficient) != 0) return false;
         if (name != null ? !name.equals(item.name) : item.name != null) return false;
         if (imageURL != null ? !imageURL.equals(item.imageURL) : item.imageURL != null) return false;
-        return parentGroup != null ? parentGroup.equals(item.parentGroup) : item.parentGroup == null;
+        if (parentGroup != null ? !parentGroup.equals(item.parentGroup) : item.parentGroup != null) return false;
+        return configuration != null ? configuration.equals(item.configuration) : item.configuration == null;
     }
 
     @Override
@@ -106,8 +121,7 @@ public abstract class Item {
         result = 31 * result + (parentGroup != null ? parentGroup.hashCode() : 0);
         temp = Double.doubleToLongBits(finalPrice);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(resolutionCoefficient);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (configuration != null ? configuration.hashCode() : 0);
         return result;
     }
 
@@ -120,23 +134,7 @@ public abstract class Item {
                 ", price=" + price +
                 ", parentGroup=" + parentGroup +
                 ", finalPrice=" + finalPrice +
-                ", resolutionCoefficient=" + resolutionCoefficient +
+                ", configuration=" + configuration +
                 '}';
-    }
-      class Configuration {
-        double configure(Item item){
-            generateResolutionCoefficient(item);
-            if (item instanceof GenerativeItem){
-                return item.getPrice()*((GenerativeItem) item).getResolutionCoefficient()*((GenerativeItem) item).getComplexity();
-            }
-            if (item instanceof StockItem){
-                return  item.getPrice()*((StockItem) item).getResolutionCoefficient();
-            }
-            return 0;
-        }
-        private void generateResolutionCoefficient(Item item){
-
-            item.resolutionCoefficient = 1 + Math.random();
-        }
     }
 }

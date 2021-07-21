@@ -2,6 +2,7 @@ package service;
 
 import entity.Group;
 import repository.GroupRepository;
+
 import java.util.List;
 
 /**
@@ -10,48 +11,36 @@ import java.util.List;
 public class GroupService {
     private GroupRepository groupRepository;
 
-    public GroupService(){
+    public GroupService() {
         groupRepository = new GroupRepository();
     }
 
-    public void add(Group group,Group parent){
-        GroupUtil groupUtil=new GroupUtil();
-        groupUtil.addRelation(group,parent);
+    public void add(Group group, Group parent) {
+        parent.addSubGroup(group);
         groupRepository.create(group);
     }
 
-    public void update(Group group,int id){
-        if (getById(id) != null){
-            groupRepository.update(group,id);
+    public void update(Group group, int id) {
+        if (getById(id) != null) {
+            groupRepository.update(group, id);
         }
     }
 
-    public void delete(int id){
-        if (getById(id) != null){
+    public void delete(int id) {
+        if (getById(id) != null) {
             groupRepository.delete(id);
         }
     }
 
-    public List<Group> getAll(){
+    public List<Group> getAll() {
         return groupRepository.findAll();
     }
 
-    public List<Group> getRoots(){
+    public List<Group> getRoots() {
         return groupRepository.findAllRoot();
     }
 
-    public Group getById(int id){
+    public Group getById(int id) {
         return groupRepository.findById(id);
-    }
-    private  class GroupUtil {
-
-        private GroupUtil(){}
-
-        public  void addRelation(Group group,Group parent){
-            group.setParent(parent);
-            if (parent != null){
-                parent.getSubGroups().add(group);
-            }
-        }
     }
 }
