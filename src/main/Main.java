@@ -1,7 +1,10 @@
+package main;
 
 import db.FakeDatabase;
+import entity.GenerativeItem;
 import entity.Group;
 import entity.Item;
+import entity.StockItem;
 import service.GroupService;
 import service.ItemService;
 import validator.Validator;
@@ -47,8 +50,24 @@ public class Main {
     }
 
     public static void inputItem(){
-        Item item = new Item();
+        Item item = null;
+        boolean t;
         String name;
+        do {
+            int inputKey;
+            name = input("Enter the type of item: 1-Generative or 2-Stock");
+            t = Validator.isValidNumber(name);
+            if(t){
+                inputKey = Integer.parseInt(name);
+                if (inputKey == 1){
+                    item = new GenerativeItem();
+                }else if(inputKey == 2){
+                    item = new StockItem();
+                }else {
+                    t = false;
+                }
+            }
+        }while(!t);
         do{
             name = input("Enter the name of item");
         } while (name.equals(""));
@@ -59,7 +78,6 @@ public class Main {
         } while (imageURL.equals(""));
         item.setImageURL(imageURL);
         String temp;
-        boolean t;
         int price=0;
         do{
             temp = input("Enter the price of item");
