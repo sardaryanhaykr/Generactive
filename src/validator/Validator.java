@@ -15,10 +15,8 @@ public class Validator {
     public static boolean isValidInteger(String param) {
         try {
             return Integer.getInteger(param) instanceof Integer;
-
         } catch (NumberFormatException e) {
             return false;
         }
-
     }
 }

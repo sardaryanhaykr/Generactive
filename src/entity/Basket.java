@@ -1,6 +1,7 @@
 package entity;
 
 import entity.Item;
+import fake.ItemFake;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,38 +10,25 @@ import java.util.List;
  * Created by Hayk on 21.07.2021.
  */
 public class Basket {
-    private List<Item> items = new ArrayList<>();
-    private double totalPrice;
+    private final List<BasketItem> items = new ArrayList<>();
 
-    public List<Item> getItems() {
-        return items;
+    public void addItems(BasketItem item) {
+        items.add(item);
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
-    public double getTotalPrice() {
+    public double calculatePrice() {
+        double totalPrice=0;
+        for (BasketItem item:items){
+            totalPrice+=item.getPrice();
+        }
         return totalPrice;
     }
 
-    private void setTotalPrice() {
-        totalPrice = calculateTotalPrice();
-    }
-
     public void printContent() {
-        for (Item item : items) {
-            System.out.println(item.getName() + "----" + item.getFinalPrice());
+        for (BasketItem item : items) {
+            System.out.println(item.getName() + "----" + item.getPrice());
         }
         System.out.println();
-        System.out.println("Total price = " + totalPrice);
-    }
-
-    private double calculateTotalPrice() {
-        double price = 0;
-        for (Item item : items) {
-            price += item.calculatePrice(item.getPrice());
-        }
-        return price;
+        System.out.println("Total price = " + calculatePrice());
     }
 }

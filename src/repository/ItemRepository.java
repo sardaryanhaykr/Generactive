@@ -4,6 +4,7 @@ import entity.Item;
 import db.FakeDatabase;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by Hayk on 19.07.2021.
@@ -54,4 +55,17 @@ public class ItemRepository implements CrudRepository<Item, Long> {
     public List<Item> findAll() {
         return items;
     }
+
+    public Item findByName(String name){
+        Item item = items.stream()
+                .filter(item1 -> name.equals(item1.getName()))
+                .findFirst()
+                .orElse(null);
+        return item;
+    }
+
+//    public List<Item> findHighestPricedItems(){
+//        Item item=items.stream()
+//                .max((Item item1,Item item2)->{return item1.getPrice()>item2.getPrice()?item1:item2;});
+//    }
 }

@@ -39,9 +39,10 @@ public class Main {
             t = Validator.isValidNumber(temp);
             if (t) {
                 parentId = Integer.parseInt(temp);
-                if (parentId != 0 && groupService.getById(parentId) != null) {
+                if (parentId == 0 || groupService.getById(parentId) != null) {
                     t = true;
                 } else {
+                    t = false;
                     parentId = 0;
                 }
             }

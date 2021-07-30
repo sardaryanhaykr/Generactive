@@ -5,29 +5,18 @@ package entity;
  */
 public abstract class Item {
     private long id;
+    private int price;
     private String name;
     private String imageURL;
-    private int price;
+
     private Group parentGroup;
     private static long idSequance = 1000;
-    private double finalPrice;
-    private Configuration configuration;
 
-    private Item(String name, String imageURL, int price, Group parentGroup) {
-        this.id = ++idSequance;
+    public Item(String name, String imageURL, int price, Group parentGroup) {
         this.name = name;
         this.imageURL = imageURL;
         this.price = price;
         this.parentGroup = parentGroup;
-    }
-
-    public Item(String name, String imageURL, int price, Group parentGroup, double finalPrice, Configuration configuration) {
-        this.name = name;
-        this.imageURL = imageURL;
-        this.price = price;
-        this.parentGroup = parentGroup;
-        this.finalPrice = finalPrice;
-        this.configuration = configuration;
     }
 
     Item() {
@@ -74,25 +63,7 @@ public abstract class Item {
         this.parentGroup = parentGroup;
     }
 
-    Configuration getConfiguration() {
-        return configuration;
-    }
-
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
-    }
-
-    double getFinalPrice() {
-        return finalPrice;
-    }
-
-    public void setFinalPrice(double finalPrice) {
-        this.finalPrice = finalPrice;
-    }
-
-    public double calculatePrice(int price) {
-        return price * configuration.getResolution().coefficient;
-    }
+    public abstract double calculatePrice(Configuration configuration);
 
     @Override
     public boolean equals(Object o) {
@@ -103,38 +74,18 @@ public abstract class Item {
 
         if (id != item.id) return false;
         if (price != item.price) return false;
-        if (Double.compare(item.finalPrice, finalPrice) != 0) return false;
         if (name != null ? !name.equals(item.name) : item.name != null) return false;
         if (imageURL != null ? !imageURL.equals(item.imageURL) : item.imageURL != null) return false;
-        if (parentGroup != null ? !parentGroup.equals(item.parentGroup) : item.parentGroup != null) return false;
-        return configuration != null ? configuration.equals(item.configuration) : item.configuration == null;
+        return parentGroup != null ? parentGroup.equals(item.parentGroup) : item.parentGroup == null;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = (int) (id ^ (id >>> 32));
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + price;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (imageURL != null ? imageURL.hashCode() : 0);
-        result = 31 * result + price;
         result = 31 * result + (parentGroup != null ? parentGroup.hashCode() : 0);
-        temp = Double.doubleToLongBits(finalPrice);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (configuration != null ? configuration.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Item{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", imageURL='" + imageURL + '\'' +
-                ", price=" + price +
-                ", parentGroup=" + parentGroup +
-                ", finalPrice=" + finalPrice +
-                ", configuration=" + configuration +
-                '}';
     }
 }

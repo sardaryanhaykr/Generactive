@@ -11,8 +11,8 @@ import java.util.List;
  * Created by Hayk on 18.07.2021.
  */
 public class FakeDatabase {
-    private static List<Group> groups = new ArrayList<>();
-    private static List<Item> items = new ArrayList<>();
+    private static final List<Group> groups = new ArrayList<>();
+    private static final List<Item> items = new ArrayList<>();
 
     public static List<Group> getGroups() {
         return groups;

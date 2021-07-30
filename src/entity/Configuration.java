@@ -5,7 +5,7 @@ package entity;
  */
 
 class Configuration {
-    private Resolution resolution;
+    private final Resolution resolution;
 
 
     public Configuration(Resolution resolution) {
@@ -13,14 +13,7 @@ class Configuration {
 
     }
 
-    public Configuration() {
-    }
-
     Resolution getResolution() {
         return resolution;
-    }
-
-    public void setResolution(Resolution resolution) {
-        this.resolution = resolution;
     }
 }

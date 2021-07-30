@@ -16,7 +16,11 @@ public class GroupService {
     }
 
     public void add(Group group, Group parent) {
-        parent.addSubGroup(group);
+        if (parent != null) {
+            parent.addSubGroup(group);
+        } else {
+            group.setParent(null);
+        }
         groupRepository.create(group);
     }
 
@@ -43,4 +47,6 @@ public class GroupService {
     public Group getById(int id) {
         return groupRepository.findById(id);
     }
+
+    public Group getByName(String name){return groupRepository.findByName(name);}
 }

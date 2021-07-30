@@ -7,8 +7,8 @@ public class GenerativeItem extends Item {
     private double complexity;
 
     @Override
-    public double calculatePrice(int price) {
-        return price * getConfiguration().getResolution().coefficient * complexity;
+    public double calculatePrice(Configuration configuration) {
+        return getPrice() * configuration.getResolution().coefficient * complexity;
     }
 
     public double getComplexity() {

@@ -66,4 +66,13 @@ public class GroupRepository implements CrudRepository<Group, Integer> {
         }
         return groups1;
     }
+
+    public Group findByName(String name){
+        for (Group group : groups) {
+            if (group.getName() == name) {
+                return group;
+            }
+        }
+        return null;
+    }
 }
