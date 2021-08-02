@@ -3,7 +3,9 @@ package repository;
 import entity.Item;
 import db.FakeDatabase;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -44,19 +46,17 @@ public class ItemRepository implements CrudRepository<Item, Long> {
     }
 
     public Item findById(long id) {
-        for (Item item : items) {
-            if (item.getId() == id) {
-                return item;
-            }
-        }
-        return null;
+        return items.stream()
+                .filter(item -> item.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public List<Item> findAll() {
         return items;
     }
 
-    public Item findByName(String name){
+    public Item findByName(String name) {
         Item item = items.stream()
                 .filter(item1 -> name.equals(item1.getName()))
                 .findFirst()
@@ -64,8 +64,30 @@ public class ItemRepository implements CrudRepository<Item, Long> {
         return item;
     }
 
-//    public List<Item> findHighestPricedItems(){
-//        Item item=items.stream()
-//                .max((Item item1,Item item2)->{return item1.getPrice()>item2.getPrice()?item1:item2;});
-//    }
+    public List<Item> findHighestPricedItems() {
+        double maxPrice = items.stream().max(Comparator.comparing(Item::getPrice)).get().getPrice();
+        List<Item> result = items.stream()
+                .filter(item -> item.getPrice() == maxPrice)
+                .collect(Collectors.toList());
+        return result;
+    }
+
+    public List<Item> findSmallestPricedItems() {
+        double minPrice = items.stream()
+                .min(Comparator.comparing(Item::getPrice))
+                .get()
+                .getPrice();
+        List<Item> result = items.stream()
+                .filter(item -> item.getPrice() == minPrice)
+                .collect(Collectors.toList());
+        return result;
+    }
+
+    public List<Item> findByPriceRange(double priceMin, double priceMax) {
+
+        List<Item> result = items.stream()
+                .filter(item -> item.getPrice() >= priceMin && item.getPrice() <= priceMax)
+                .collect(Collectors.toList());
+        return result;
+    }
 }

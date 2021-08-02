@@ -5,6 +5,7 @@ import db.FakeDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Hayk on 19.07.2021.
@@ -45,12 +46,10 @@ public class GroupRepository implements CrudRepository<Group, Integer> {
     }
 
     public Group findById(int id) {
-        for (Group group : groups) {
-            if (group.getId() == id) {
-                return group;
-            }
-        }
-        return null;
+        return groups.stream()
+                .filter(group -> group.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public List<Group> findAll() {
@@ -58,21 +57,21 @@ public class GroupRepository implements CrudRepository<Group, Integer> {
     }
 
     public List<Group> findAllRoot() {
-        List<Group> groups1 = new ArrayList<>();
-        for (Group group : groups) {
-            if (group.getParent() == null) {
-                groups1.add(group);
-            }
-        }
-        return groups1;
+        return groups.stream()
+                .filter(group -> group.getParent() == null)
+                .collect(Collectors.toList());
     }
 
-    public Group findByName(String name){
-        for (Group group : groups) {
-            if (group.getName() == name) {
-                return group;
-            }
-        }
-        return null;
+    public Group findByName(String name) {
+        return groups.stream()
+                .filter(group1 -> group1.getName() == name)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Group> findByParent(Group parent) {
+        return groups.stream()
+                .filter(group -> group.getParent().equals(parent))
+                .collect(Collectors.toList());
     }
 }
