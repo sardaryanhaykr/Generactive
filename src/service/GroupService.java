@@ -45,8 +45,18 @@ public class GroupService {
     }
 
     public Group getById(int id) {
-        return groupRepository.findById(id);
+        if (groupRepository.findById(id).isPresent()) {
+            return groupRepository.findById(id).get();
+        }else{
+            return null;
+        }
     }
 
-    public Group getByName(String name){return groupRepository.findByName(name);}
+    public Group getByName(String name){
+        if (groupRepository.findByName(name).isPresent()) {
+            return groupRepository.findByName(name).get();
+        }else{
+            return null;
+        }
+    }
 }

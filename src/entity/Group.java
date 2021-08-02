@@ -14,7 +14,15 @@ public class Group {
     private List<Item> items;
     private static int idSequance = 1000;
 
-    private Group(String name, Group parent) {
+    public Group(int id,String name, Group parent) {
+        this.id = id;
+        this.name = name;
+        this.parent = parent;
+        items = new ArrayList<>();
+        subGroups = new ArrayList<>();
+    }
+
+    public Group(String name, Group parent){
         this.id = ++idSequance;
         this.name = name;
         this.parent = parent;

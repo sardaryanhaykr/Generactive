@@ -7,9 +7,15 @@ import entity.Item;
 import entity.StockItem;
 import service.GroupService;
 import service.ItemService;
+import util.ItemConvertor;
 import validator.Validator;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class Main {
     private static GroupService groupService = new GroupService();
@@ -107,9 +113,28 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        //Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+
+        groupService.add(new Group(1, "Group1", null), null);
+        groupService.add(new Group(2, "Group2", null), null);
+        groupService.add(new Group(3, "Group3", null), null);
+        List<String> rows = new ArrayList<>();
+        File file = new File("src/main/resources/item.csv");
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                rows.add(scanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Please input the file path correctly");
+        }
+        for (String s : rows) {
+            Item item = ItemConvertor.convert(s, new StockItem());
+            if (item != null) {
+                itemService.add(item, item.getParentGroup());
+            }
+        }
 
         String command;
-
         do {
             System.out.println("Please enter one of the commands");
             System.out.println("group----OR----1");

@@ -50,7 +50,11 @@ public class ItemService {
     }
 
     public Item getById(long id) {
-        return itemRepository.findById(id);
+        if (itemRepository.findById(id).isPresent()) {
+            return itemRepository.findById(id).get();
+        }else{
+            return null;
+        }
     }
 
     private class ItemUtil {
