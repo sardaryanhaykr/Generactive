@@ -1,6 +1,4 @@
-package entity;
-
-import fake.ItemFake;
+package main.entity;
 
 /**
  * Created by Hayk on 30.07.2021.

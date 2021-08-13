@@ -1,4 +1,4 @@
-package validator;
+package main.validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,18 +9,18 @@ import java.util.regex.Pattern;
 public final class Validator {
     private final static String regularExpressionDouble = "-?[0-9]+(?:[,.][0-9]+)?";
     private final static String regularExpressionInt = "-?[1-9]\\d*|0";
-    private static final Pattern DOUBLE_pATTERN=Pattern.compile(regularExpressionDouble);
-    private static final Pattern INT_pATTERN=Pattern.compile(regularExpressionInt);
+    private static final Pattern DOUBLE_PATTERN=Pattern.compile(regularExpressionDouble);
+    private static final Pattern INT_PATTERN=Pattern.compile(regularExpressionInt);
 
     private Validator(){}
 
     public static boolean isInt(String expression){
-        Matcher matcher = INT_pATTERN.matcher(expression);
+        Matcher matcher = INT_PATTERN.matcher(expression);
         return matcher.matches();
     }
 
     public static boolean isDouble(String expression) {
-        Matcher matcher = DOUBLE_pATTERN.matcher(expression);
+        Matcher matcher = DOUBLE_PATTERN.matcher(expression);
         return matcher.matches();
     }
     public static boolean isValidNumber(String param) {

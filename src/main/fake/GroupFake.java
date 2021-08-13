@@ -1,6 +1,6 @@
-package fake;
+package main.fake;
 
-import entity.Group;
+import main.entity.Group;
 
 /**
  * Created by Hayk on 30.07.2021.

@@ -1,7 +1,7 @@
-package service;
+package main.service;
 
-import entity.Group;
-import repository.GroupRepository;
+import main.entity.Group;
+import main.repository.GroupRepository;
 
 import java.util.List;
 

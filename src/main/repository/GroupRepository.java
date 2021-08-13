@@ -1,9 +1,8 @@
-package repository;
+package main.repository;
 
-import entity.Group;
-import db.FakeDatabase;
+import main.entity.Group;
+import main.db.FakeDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -75,7 +74,10 @@ public class GroupRepository implements CrudRepository<Group, Integer> {
 
     public List<Group> findByParent(Group parent) {
         return groups.stream()
-                .filter(group -> group.getParent().equals(parent))
+               .filter(group -> group.getParent().equals(parent))
                 .collect(Collectors.toList());
+    }
+    public void clear(){
+        groups.clear();
     }
 }

@@ -1,13 +1,12 @@
-package repository;
+package main.repository;
 
-import entity.Item;
-import db.FakeDatabase;
+import main.entity.Item;
+import main.db.FakeDatabase;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by Hayk on 19.07.2021.

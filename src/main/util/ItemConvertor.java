@@ -1,8 +1,8 @@
-package util;
+package main.util;
 
-import entity.Item;
-import service.GroupService;
-import validator.Validator;
+import main.entity.Item;
+import main.service.GroupService;
+import main.validator.Validator;
 
 /**
  * Created by Hayk on 02.08.2021.

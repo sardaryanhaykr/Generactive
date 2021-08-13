@@ -1,10 +1,9 @@
-package db;
+package main.db;
 
-import entity.Group;
-import entity.Item;
+import main.entity.Group;
+import main.entity.Item;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,5 +31,10 @@ public class FakeDatabase {
 
     public static void printGroupsId(){
         idList().toString();
+    }
+
+    public static void clear(){
+        groups.clear();
+        items.clear();
     }
 }

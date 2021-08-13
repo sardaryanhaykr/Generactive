@@ -1,7 +1,4 @@
-package entity;
-
-import entity.Item;
-import fake.ItemFake;
+package main.entity;
 
 import java.util.ArrayList;
 import java.util.List;

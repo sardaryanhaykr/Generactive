@@ -1,4 +1,4 @@
-package entity;
+package main.entity;
 
 /**
  * Created by Hayk on 15.07.2021.

@@ -1,4 +1,4 @@
-package repository;
+package main.repository;
 
 /**
  * Created by Hayk on 18.07.2021.
