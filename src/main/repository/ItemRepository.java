@@ -1,5 +1,6 @@
 package main.repository;
 
+import main.entity.Configuration;
 import main.entity.Item;
 import main.db.FakeDatabase;
 
@@ -25,9 +26,14 @@ public class ItemRepository implements CrudRepository<Item, Long> {
 
     @Override
     public void update(Item item, Long id) {
-        Item item1=null;
+        Item item1=new Item() {
+            @Override
+            public double calculatePrice(Configuration configuration) {
+                return 0;
+            }
+        };
         if(findById(id).isPresent()){
-        item = findById(id).get();
+        item1 = findById(id).get();
         if (item.getPrice() != 0) {
             item1.setPrice(item.getPrice());
         }
@@ -93,5 +99,12 @@ public class ItemRepository implements CrudRepository<Item, Long> {
                 .filter(item -> item.getPrice() >= priceMin && item.getPrice() <= priceMax)
                 .collect(Collectors.toList());
 
+    }
+
+    public void clear(){
+        items.clear();
+    }
+    public boolean isEmpty(){
+        return items.isEmpty();
     }
 }

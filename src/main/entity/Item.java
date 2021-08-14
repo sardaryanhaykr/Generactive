@@ -19,7 +19,7 @@ public abstract class Item {
         this.parentGroup = parentGroup;
     }
 
-    Item() {
+    public Item() {
         this(null, null, 0, null);
     }
 

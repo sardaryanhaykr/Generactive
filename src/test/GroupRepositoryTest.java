@@ -1,11 +1,12 @@
 package test;
+
 import main.entity.Group;
 import main.repository.GroupRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +14,11 @@ import java.util.stream.Collectors;
 
 
 class GroupRepositoryTest {
-    GroupRepository groupRepository=new GroupRepository();
-    Group group=new Group("TestGroup",null);
+    GroupRepository groupRepository = new GroupRepository();
+    Group group = new Group("TestGroup", null);
 
     @BeforeEach
-    public void clearDB(){
+    public void clearDB() {
         groupRepository.clear();
     }
 
@@ -25,17 +26,17 @@ class GroupRepositoryTest {
     @DisplayName("CreateGroup")
     void create() {
         groupRepository.create(group);
-        assertEquals(group,groupRepository.findByName(group.getName()).get());
+        assertEquals(group, groupRepository.findByName(group.getName()).get());
     }
 
     @Test
     @DisplayName("UpdateGroup")
     void update() {
         groupRepository.create(group);
-        Group group1=new Group("UpdatedGroup",null);
-        groupRepository.update(group1,group.getId());
+        Group group1 = new Group("UpdatedGroup", null);
+        groupRepository.update(group1, group.getId());
         group1.setId(group.getId());
-        assertEquals(group1,groupRepository.findByName("UpdatedGroup").get());
+        assertEquals(group1, groupRepository.findByName("UpdatedGroup").get());
     }
 
     @Test
@@ -63,8 +64,8 @@ class GroupRepositoryTest {
     @DisplayName("FindAllRoot")
     void findAllRoot() {
         groupRepository.create(group);
-        assertEquals(groupRepository.findAllRoot(),groupRepository.findAll().stream()
-                .filter(group1 -> group1.getParent()==null)
+        assertEquals(groupRepository.findAllRoot(), groupRepository.findAll().stream()
+                .filter(group1 -> group1.getParent() == null)
                 .collect(Collectors.toList()));
     }
 
@@ -78,12 +79,13 @@ class GroupRepositoryTest {
     @Test
     @DisplayName("FindByParent")
     void findByParent() {
-        Group group1=new Group("Sub",group);
-        List<Group> list=new ArrayList<>();
+
+        Group group1 = new Group("Sub", group);
+        List<Group> list = new ArrayList<>();
         list.add(group1);
         groupRepository.create(group);
         groupRepository.create(group1);
-        assertEquals(list,groupRepository.findByParent(group));
+        assertEquals(list, groupRepository.findByParent(group));
     }
 
 }

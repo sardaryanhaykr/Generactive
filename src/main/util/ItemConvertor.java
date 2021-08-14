@@ -8,12 +8,13 @@ import main.validator.Validator;
  * Created by Hayk on 02.08.2021.
  */
 public final class ItemConvertor {
-    private ItemConvertor(){}
+    private ItemConvertor() {
+    }
 
-    public static Item convert(String value,Item item){
+    public static Item convert(String value, Item item) {
 
-        String[] vars=value.split(",");
-        if (vars.length>5 || !Validator.isInt(vars[0]) || !Validator.isInt(vars[1]) || !Validator.isInt(vars[4])){
+        String[] vars = value.split(",");
+        if (vars.length > 5 || !Validator.isInt(vars[0]) || !Validator.isInt(vars[1]) || !Validator.isInt(vars[4])) {
             return null;
         }
 

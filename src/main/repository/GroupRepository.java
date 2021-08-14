@@ -73,11 +73,12 @@ public class GroupRepository implements CrudRepository<Group, Integer> {
     }
 
     public List<Group> findByParent(Group parent) {
-        return groups.stream()
-               .filter(group -> group.getParent().equals(parent))
+        return groups.stream().filter(group -> group.getParent() != null)
+                .filter(group -> group.getParent().equals(parent))
                 .collect(Collectors.toList());
     }
-    public void clear(){
+
+    public void clear() {
         groups.clear();
     }
 }

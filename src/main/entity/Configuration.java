@@ -4,7 +4,7 @@ package main.entity;
  * Created by Hayk on 21.07.2021.
  */
 
-class Configuration {
+public class Configuration {
     private final Resolution resolution;
 
 
